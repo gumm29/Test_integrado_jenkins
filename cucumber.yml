@@ -1,0 +1,3 @@
+default: -f pretty
+
+headless: BROWSER=headless

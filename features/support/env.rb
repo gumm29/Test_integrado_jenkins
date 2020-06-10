@@ -9,14 +9,12 @@ require 'ostruct'
 require 'openssl'
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+Faker::Config.locale = 'pt-BR'
 
-Capybara.register_driver :selenium_firefox do |app|
-  Capybara::Selenium::Driver.new(app, browser: firefox)
-end
+NAV = ENV['BROWSER']
 
 Capybara.configure do |config|
-  config.default_driver = :selenium_chrome
+  driver = NAV.eql?('headless') ? :selenium_chrome_headless : :selenium_chrome
+  config.default_driver = driver
   config.default_max_wait_time = 100
 end
-
-Faker::Config.locale = 'pt-BR'
